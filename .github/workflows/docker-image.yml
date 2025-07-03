@@ -42,5 +42,5 @@ jobs:
 
     - name: Tag and push built Docker image
       run: |
-        docker tag thingsboard/tb:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/tb:latest
+        docker tag thingsboard/tb-postgres:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/tb:latest
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/tb:latest
