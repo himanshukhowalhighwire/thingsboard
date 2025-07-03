@@ -30,6 +30,7 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        mvn clean install -DskipTests -Ddockerfile.skip=false -Dlicense.skip=true
-        docker tag thingsboard/tb-postgres:4.0.1-SNAPSHOT ${{ secrets.DOCKERHUB_USERNAME }}/tb-postgres:latest
+        mvn clean install -DskipTests -Dlicense.skip=true -Ddockerfile.skip=true
+        cd docker/tb-postgres
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/tb-postgres:latest .
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/tb-postgres:latest
