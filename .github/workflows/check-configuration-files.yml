@@ -16,9 +16,6 @@
 
 name: Check configuration files
 on:
-  push:
-    branches:
-      - master
   pull_request:
     paths:
       - 'application/src/main/resources/thingsboard.yml'
