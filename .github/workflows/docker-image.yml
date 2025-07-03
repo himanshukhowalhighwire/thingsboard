@@ -28,9 +28,19 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build and push Docker image
+    - name: Build ThingsBoard and Docker Image
       run: |
-        mvn clean install -DskipTests -Dlicense.skip=true -Ddockerfile.skip=true
-        cd docker/tb-postgres
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/tb-postgres:latest .
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/tb-postgres:latest
+        mvn clean install -DskipTests -Ddockerfile.skip=false -Dlicense.skip=true
+
+    - name: Extract ThingsBoard version
+      id: extract_version
+      run: |
+        echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+    - name: List Docker images
+      run: docker images
+
+    - name: Tag and push built Docker image
+      run: |
+        docker tag thingsboard/tb:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/tb:latest
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/tb:latest
