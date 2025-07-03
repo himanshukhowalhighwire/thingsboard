@@ -19,7 +19,6 @@ name: License header format
 on:
   push:
     branches:
-      - 'master'
       - 'develop/3*'
       - 'hotfix/3*'
 
